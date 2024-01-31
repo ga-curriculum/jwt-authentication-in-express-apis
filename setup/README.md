@@ -16,6 +16,7 @@ cd [tktk-module-name]
 ```
 
 <!-- Other setup instructions here -->
+Reference the express set up instructions from the MEN stack.
 
 
 Open the contents of the directory in VSCode:
