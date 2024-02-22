@@ -1,19 +1,19 @@
-# ![[tktk Module Name] - tktk Microlesson Name](./assets/hero.png)
+# ![Authenticating an Express API with JWT - Sign Up Route](./assets/tktk-hero.png)
 
-**Learning objective:** By the end of this lesson, students will be able to tktk
+**Learning objective:** By the end of this lesson, students will be able to implement a sign up route with Express and JWTs.
 
 ## User Model
 
-In this section, we will be setting up an Express application to use JSON Web Tokens (JWT) for **authentication** and **authorization**. For this, we will need a user model to store user information. We will use Mongoose to create a user model with the following fields:
+This section will set up an Express application to use JSON Web Tokens (JWT) for **authentication** and **authorization**. For this, we will need a user model to store user information. We will use Mongoose to create a user model with the following fields:
 
 | Field          | Type   | Description            |
 | -------------- | ------ | ---------------------- |
 | username       | String | User's username        |
 | hashedPassword | String | User's hashed password |
 
-### tktk hat emoji You do: Create a User Model
+### 🎓 You do: Create a User Model
 
-The goal of this exercise is to create a user model using Mongoose. You will need to create a new file called `user.js` in a `models` directory and define the user schema and model.
+The goal of this exercise is to create a user model using Mongoose. You must create a new file called `user.js` in a `models` directory and define the user schema and model.
 
 The user schema should have the following fields:
 
@@ -24,9 +24,9 @@ Make sure to create and export the user model at the end of the file.
 
 ## Sign Up Route
 
-Let's create a route to allow users to sign up for our application. This route will be responsible for creating a new user in the database. For this step we are going to be using `bcrypt` to hash the user's password before saving it to the database. 
+Let's create a route to allow users to sign up for our application. This route will be responsible for creating a new user in the database. For this step, we will use `bcrypt` to hash the user's password before saving it to the database. 
 
-Create a new file in the `controllers` folder called `users.js`. Inside of `users.js` we want set up a new router and create a POST route for `/sign-up`. This route will be responsible for creating a new user in the database, but for now, let's send back a message to the user to let them know that the route is working.
+Create a new file in the `controllers` folder called `users.js`. Inside `users.js`, we want to set up a new router and create a POST route for `/signup`. This route will be responsible for creating a new user in the database, but for now, let's send back a message to the user to let them know that the route is working.
 
 ```js
 // /controllers/users.js
@@ -60,22 +60,22 @@ Using Postman, make a POST request to `http://localhost:3000/users/signup` and c
 
 ### Bcrypt
 
-We never want to save passwords dirrectly to the database. This is because if our database gets hacked, people's passwords would be exposed to the hackers. This could lead to other accounts being stolen that use the same password.
+We never want to save passwords directly to the database. This is because if our database gets hacked, people's passwords would be exposed to the hackers. This could lead to other accounts using the same password being stolen.
 
-Bcrypt is a package that will encrypt passwords for us so we are not saving them dirrectly to the database. It's not important to know exactly how Bcrypt works but let's go over a high overview of what it's doing to our passwords.
+Bcrypt is a package that will encrypt passwords for us, so we are not saving them directly to the database. Knowing precisely how Bcrypt works is not essential. Let's review a high-level overview of what it's doing to our passwords.
 
-1. **Hashes the Password**: Applies a one-way hash function to our passwords that converts them into a fixed-length string of characters. This is a mathematical process that produces a unique output for each input, making it practically impossilbe to reverse-engineer the original password from the hash.
-2. **Salting**: Uses a technique called "salting". This is were random string of characters are added to the password before hashing it. This random string of characters is often refered to as the "salt". Adding the "salt" to a password ensures if two users have the same password they do not end up with the same hash.
-3. **Adjustable Work Factor**: Allows you to adjust the "work factor" or the number of times a password is hashed. However this will increase the time the hash function runs for. As we increase the number of times we hash we dirrectly increase the time the function will need to run for.
+1. **Hashes the Password**: Applies a one-way hash function to our passwords, converting them into a fixed-length string of characters. This mathematical process produces a unique output for each input, making it practically impossible to reverse-engineer the original password from the hash.
+2. **Salting**: Uses a technique called "salting". This is where a random string of characters is added to the password before hashing it. This random string of characters is often called the "salt". Adding the "salt" to a password ensures that if two users have the same password, they do not end up with the same hash.
+3. **Adjustable Work Factor**: You can adjust the "work factor" or the number of times a password is hashed. However, this will increase the time the hash function runs. As we increase the number of times we hash, we directly increase the time the function will need to run.
 
-There are two main methods in the Bcrypt library that allows us to hash a passwords.
+Two main methods in the Bcrypt library allow us to hash passwords.
 
-- `hash()`: Used for **asynchronously** generating a hash for the given string. It returns promise is callback is committed and you need to resolve the promise.
-- `hashSync()`: Used to **synchronously** generates a hash for the given string. It returns the hashed string
+- `hash()`: Used for **asynchronously** generating a hash for the given string. It returns a promise that would need to be resolved.
+- `hashSync()`: Used to **synchronously** generates a hash for the given string. It returns the hashed string.
 
-We are going to use the `hashSync()` method for our hashing purposes.
+We will use the `hashSync()` method for our hashing purposes.
 
-Let's install Bcrypt and require it in our `controllers/users.js` file, along with the user model.
+Let's install Bcrypt and require it in our `controllers/users.js` file and the user model.
 
 ```bash
 npm i bcrypt
@@ -92,7 +92,7 @@ const User = require('../models/user');
 // ... route still below
 ```
 
-Inside of our `singup` route, remove the placeholder `res.json`, add `async` to the start of the callback function and include a `try...catch` block.
+Inside our `signup` route, remove the placeholder `res.json`, add `async` to the start of the callback function, and include a `try...catch` block.
 
 ```js
 // controllers/users.js
@@ -106,12 +106,12 @@ router.post('/signup', async (req, res) => {
 });
 ```
 
-Using the `create` method on the user model, we are going to create a new user. For the field `hashedPassword` we want to called the Bcrypt method `hashSync`. This method intakes two arguments:
+We will create a new user using the `create` method on the user model. For the field `hashedPassword`, we want to call the Bcrypt method `hashSync`. This method intakes two arguments:
 
 - The password to be hashed. Or string to be hashed.
 - The salt length to generate.
 
-Once we create the new user we will want to send the status of `201` created along with the user to the client.
+Once we create the new user, we will want to send the status of `201` created along with the user to the client.
 
 ```js
 // controllers/users.js
@@ -134,7 +134,7 @@ router.post('/signup', async (req, res) => {
 });
 ```
 
-The last things we have to do for this route is handle any errors that might happen. Let's do that by setting the status code to `400` and sending the error message to the client.
+The last thing we have to do for this route is handle any errors that might happen. Let's do that by setting the status code to `400` and sending the error message to the client.
 
 ```js
 // controllers/users.js
@@ -152,7 +152,7 @@ router.post('/signup', async (req, res) => {
 });
 ```
 
-Test this by using Postman to make a POST request to `http://localhost:3000/users/signup`. Make sure to send in the correct body in the request. It should be formatted as such: 
+Test this using Postman to make a POST request to `http://localhost:3000/users/signup`. Make sure to send in the correct body in the request. It should be formatted as such: 
 
 ```json
 {
@@ -161,13 +161,13 @@ Test this by using Postman to make a POST request to `http://localhost:3000/user
 }
 ```
 
-We should recieve a reponse that includes the `hashedPassword`. While this is not our plain text password we shouldn't be sending this inside of a JSON object. It should live safely inside of our database. Let's fix this. 
+We should receive a response that includes the `hashedPassword`. While this is not our plain text password, we shouldn't send it inside a JSON object. It should live safely inside our database. Let's fix this. 
 
 ## Remove Hased Password from Response
 
-To remove the hashed password from our JSON response we will need to add a function to our Schema. In Mongoose there is a method called `set` where we set options for our Schemas. There is an option in our Schemas that is called `toJSON` and this is called when we take an instance of a document and send it through a function or method, like `res.json()`, that transfroms the docment to JSON. 
+We will need to add a function to our Schema to remove the hashed password from our JSON response. In Mongoose, there is a method called `set` where we set options for our Schemas. There is an option in our Schemas called `toJSON`, which is called when we take an instance of a document and send it through a function or method, like `res.json()`, that transforms the document to JSON. 
 
-This is perfect because we want to remove the field `hashedPassword` when we send it to the client using `res.json()`. Let's implement this. Inside of `models/user.js` and under where we created our `userSchema` let's call the `set` method on our `userSchema`.
+This is perfect because we want to remove the field `hashedPassword` when we send it to the client using `res.json()`. Let's implement this. Inside of `models/user.js` and where we created our `userSchema`, let's call the `set` method on our `userSchema`.
 
 ```js
 // models/user.js
@@ -178,12 +178,12 @@ userSchema.set();
 
 The `set` method is going to intake two arguments:
 
-- Key: *String* - The name of the option to set.
-- Value: *Object* - The value of the option we want to set.
+- Key: *String* - The option's name to set.
+- Value: *Object* - The option's value we want to set.
 
-We already know we want to change the `toJSON` option so that will be the key we want to change. For the value we want to delete the field `hashedPassword` from the document. To to this we will use *transform*. Transform is expecting a callback function and it will hand that callback function two items. First the original document from the database, the second will be what is returned when the function is run.
+We already know we want to change the `toJSON` option, so that will be the key we want to change. For the value, we want to delete the field `hashedPassword` from the document. To do this, we will use *transform*. Transform is expecting a callback function, and it will hand that callback function two items. First, the original document from the database; the second will be what is returned when the function is run.
 
-Inside of the `set` method let's add the two arguments.
+Inside the `set` method, let's add the two arguments.
 
 ```js
 // models/user.js
@@ -195,4 +195,4 @@ userSchema.set('toJSON', {
 });
 ```
 
-Test again with Postman and you can see that the hashed password has been removed.
+Test again with Postman, and you can see that the hashed password has been removed.

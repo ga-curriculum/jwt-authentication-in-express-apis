@@ -1,12 +1,12 @@
-# ![[tktk Module Name] - tktk Microlesson Name](./assets/hero.png)
+# ![Authenticating an Express API with JWT - Setting up JWTs](./assets/tktk-hero.png)
 
-**Learning objective:** By the end of this lesson, students will be able to explain how JSON Web Tokens use siging and verifying to authenticate users in an Express application.
+**Learning objective:** By the end of this lesson, students will be able to explain how JSON Web Tokens use signing and verifying to authenticate users in an Express application.
 
 ## JSON Web Tokens (JWT) in Express
 
-Before we begin creating routes to handle signing up and signing in users, let's have a look at how we can use JSON Web Tokens (JWT) in an Express application.
+Before creating routes to handle signing up and signing in users, let's look at how we can use JSON Web Tokens (JWT) in an Express application.
 
-Like all other npm packages, we need to install the `jsonwebtoken` package.
+Like all other npm packages, we must install the `jsonwebtoken` package.
 
 ```bash
 npm i jsonwebtoken
@@ -14,22 +14,22 @@ npm i jsonwebtoken
 
 JWTs are a way to securely transmit information between parties as a JSON object. This information can be verified and trusted because it is digitally signed. JWTs can be signed using a secret (with the `HMAC` algorithm) or a public/private key pair using `RSA` or `ECDSA`.
 
-> tktk brief explanation of the different algorithms
+> No need to know what `HMAC`, `RSA`, or `ECDSA` are. Just know that they are different algorithms used to sign JWTs.
 
-We don't have to know the details of how JWTs are created and verified, but we do need to know how to use them in our application.
+We don't have to know how JWTs are created and verified, but we must know how to use them in our application.
 
 JWTs break down into two actions:
 
 - **Signing**: Creating a JWT and sending it to the client.
-- **Verifying**: Receiving a JWT from the client and verifying it.
+- **Verifying**: Receive a JWT from the client and verify it.
 
-We are going to create two routes in our Express application to handle these two actions. These are just test routes that will not be important to the final application, but they will help us understand how to use JWTs in Express.
+We will create two routes to handle these two actions in our Express application. These are just test routes that will not be important to the final application but will help us understand how to use JWTs in Express.
 
 ## Signing a JWT
 
-Even though we are not going to use these routes for our final project we are still going to follow best practice and create a `controllers` directory to hold our route handlers.
+Even though we will not use these routes for our final project, we will still follow best practices and create a `controllers` directory to hold our route handlers.
 
-Create a new file called `test-jwt.js` in the `controllers` folder. If you do not have a `controllers` folder, create one. Once created, let's set up the file with a `router` and an empty GET route. This route should follow the sturcture below:
+Create a new file called `test-jwt.js` in the `controllers` folder. If you do not have a `controllers` folder, create one. Once created, let's set up the file with a `router` and an empty GET route. This route should follow the structure below:
 
 - Route: `/sign-token`
 - Method: `GET`
@@ -61,9 +61,9 @@ const testJWTRouter = require('./controllers/test-jwt');
 app.use('/test-jwt', testJWTRouter);
 ```
 
-Open up Postman and make a GET request to `http://localhost:3000/test-jwt/sign-token`. You should see the message `You are authorized!` in the response. Make sure you can see the message before you move on.
+Open up Postman and make a GET request to `http://localhost:3000/test-jwt/sign-token`. The response should show the message `You are authorized!`. Make sure you can see the message before you move on.
 
-Now that we have a route that sends out a test message, let's dive into the JWT signing process. The `jsonwebtoken` package has a method called `sign` that we can use to create a JWT. We will use this method to create a JWT and send it to the client.
+Now that we have a route that sends a test message let's dive into the JWT signing process. The `jsonwebtoken` package has a method called `sign` that we can use to create a JWT. We will use this method to create a JWT and send it to the client.
 
 The `sign` method takes three arguments:
 
@@ -71,13 +71,13 @@ The `sign` method takes three arguments:
 2. The secret key to sign the JWT with.
 3. An options object.
 
-The **payload** is the information we want to include in the JWT. This can be any JSON object. For us, we want to specify that that this token belongs to a certian user, and no one else. So we will include a mock user object with a `username`, `password`, and `_id` field. 
+The **payload** is the information we want to include in the JWT. This can be any JSON object. We want to specify that this token belongs to a specific user and no one else. So we will include a mock user object with a `username`, `password`, and `_id` field. 
 
-The **secret key** is a string that is used to sign the JWT. This key is unique to our application and should be kept secret. We will store this key in our `.env` file.
+The **secret key** is a string used to sign the JWT. This key is unique to our application and should be kept secret. We will store this key in our `.env` file.
 
-The **options object** is an object that allows us to specify how the JWT should be created. We can specify the algorithm to use, the expiration time, and other options. We will use the default options for now, so we will not be using this argument.
+The **options object** is an object that allows us to specify how the JWT should be created. We can specify the algorithm to use, the expiration time, and other options. We will use the default options for now, so we will not use this argument.
 
-Now that we have an understanding of the `sign` method, let's use it in our `/test-jwt/sign-token` route.
+Now that we understand the `sign` method let's use it in our `/test-jwt/sign-token` route.
 
 Remove the `res.json` method from the route and replace it with a mock user object:
 
@@ -93,19 +93,19 @@ router.get('/sign-token', (req, res) => {
 });
 ```
 
-This mock user will be a stand in for a user document that we would have in our database. We will use this user object as the payload for our JWT.
+This mock user will be a stand-in for a user document that we would have in our database. We will use this user object as the payload for our JWT.
 
-We have our **payload**, now we need to create the **secret key**. Inside of your `.env` file, add a new key value pair for the secret key:
+We have our **payload**; now we must create the **secret key**. Inside of your `.env` file, add a new key-value pair for the secret key:
 
 ```bash
 JWT_SECRET=L2d6ZjAV
 ```
 
-Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4inK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. The key to the secret key is that it should be secret and not shared or left in your code where someone would have access to viewing it. 
+Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4inK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. The key to the secret key should be secret and not shared or left in your code where someone would have access to view it. 
 
-> tktk brain emoji If you want a more secure secret key, you can use a password generator to create a random string of characters. Or, as I've done, bash on your keyboard for a few seconds and use that as your secret key. Just remember to remove spaced.
+> 🧠 If you want a more secure secret key, you can use a password generator to create a random string of characters. Or, as I've done, bash on your keyboard for a few seconds and use that as your secret key. Just remember to remove space.
 
-We now have both of the required arguments for the `sign` method. First require in the `jsonwebtoken` package at the top of the `test-jwt.js` file:
+We now have both required arguments for the `sign` method. First, require in the `jsonwebtoken` package at the top of the `test-jwt.js` file:
 
 ```js
 // controllers/test-jwt.js
@@ -152,9 +152,9 @@ We have successfully created a JWT and sent it to the client. We will use this t
 
 ## Verifying a JWT
 
-Just like with the above route this route will also not be apart of our finished application and will just be used for testing. 
+Just like with the above route, this route will not be a part of our finished application and will just be used for testing. 
 
-Still inside of the `test-jwt.js` file, create a new route that will receive a POST request with the token included in the body. This route should follow the structure below:
+Still, inside the `test-jwt.js` file, create a new route to receive a POST request. This route should follow the structure below:
 
 - Route: `/verify-token`
 - Method: `POST`
@@ -169,27 +169,27 @@ router.get('/verify-token', (req, res) => {
 
 Using Postman, make a POST request to `http://localhost:3000/test-jwt/verify-token`. You should see a response with the message `Token is valid`. Make sure you can see the message before you move on.
 
-Along with `sign` there is a `verify` method that we can use to verify the token. The `verify` method takes three arguments:
+Along with `sign`, we can use a `verify` method to verify the token. The `verify` method takes three arguments:
 
 - The token to verify.
 - The secret key to verify the token with.
 - An options object.
 
-We will use the `verify` method to verify the token that we created in the previous route. We will also use the secret key that we created in the `.env` file.
+We will use the `verify` method to verify the token we created in the previous route. We will also use the secret key created in the `.env` file.
 
-To send the token to the server, we will use Postman. Open Postman and copy the token you were sent in the previous route. If you have lost that token just send another request to the same test route and get another token.
+To send the token to the server, we will use Postman. Open Postman and copy the token you were sent in the previous route. If you have lost that token, just send another request to the same test route and get another token.
 
-Still in Postman navigate to the request you created to test the `verify-token` route. Under the URL bar select the `Authorization` tab.
+Still, in Postman, navigate to the request you created to test the `verify-token` route. Under the URL bar, select the `Authorization` tab.
 
-tktk Hunter - screenshots and highlight the auth tab on postman
+tktk Hunter - screenshots and highlight the auth tab on Postman
 
-Once in the `Authorization` tab, select `Bearer Token` from the dropdown. In the input field that appears paste the token you copied from the previous route. Once you have pasted the token.
+Once in the `Authorization` tab, select `Bearer Token` from the dropdown. Paste the token you copied from the previous route in the input field that appears. Once you have pasted the token.
 
 tktk Hunter - screenshots and highlight the bearer token dropdown and the input field
 
-Now when we send a request to the `verify-token` route, the token will be included in the headers of the request. We can access this token in the route handler using `req.headers.authorization`.
+When we send a request to the `verify-token` route, the token will be included in the request's headers. We can access this token in the route handler using `req.headers.authorization`.
 
-Let's do that. Back inside of our code let's go back to our `verify-token` route. Remove the `res.json` placeholder we coded and replace it with grabbing the token from the request. For right now let's just send back the token to the client:
+Let's do that. In our code, let's return to our `verify-token` route. Remove the `res.json` placeholder we coded and replace it with grabbing the token from the request. For right now, let's just send back the token to the client:
 
 ```js
 // controllers/test-jwt.js
@@ -199,7 +199,7 @@ router.post('/verify-token', (req, res) => {
 });
 ```
 
-Test with Postman to make sure you can see the token in the response. You should see something like:
+Test with Postman to ensure you can see the token in the response. You should see something like:
 
 ```json
 {
@@ -207,9 +207,9 @@ Test with Postman to make sure you can see the token in the response. You should
 }
 ```
 
-Notice that there is the word `Bearer` in front of the token. This is a convention that is used to specify the type of token that is being sent. We will need to remove this word before we can verify the token. This is because the verify method is only expecting the token and NOT anything prepended to it.
+Notice the word `Bearer` is in front of the token. This is a convention that is used to specify the type of token that is being sent. We will need to remove this word before we can verify the token. This is because the verify method only expects the token and nothing prepended.
 
-To remove the word `Bearer` from the token, we can use the `split` method. This method will split the string into an array of strings. We can then grab the second item in the array, which will be the token.
+We can use the `split` method to remove the word `Bearer` from the token. This method will split the string into an array of strings. We can then grab the second item in the array, the token.
 
 ```js
 // controllers/test-jwt.js
@@ -219,9 +219,9 @@ router.post('/verify-token', (req, res) => {
 });
 ```
 
-Testing this with Postman again we can see that we just get back the token without the word `Bearer` in front of it.
+Testing this with Postman again, we can see that we just get back the token without the word `Bearer` in front of it.
 
-We have the token let's verfiy that it's the correct one with the method `verify` from the `jsonwebtoken` package. This method will intake the token and the secret key and return the payload that was used to create the token. If the token is invalid, the method will throw an error. 
+We have the token. Let's verify it's correct with the `verify` method from the `jsonwebtoken` package. This method will intake the token and the secret key and return the payload used to create the token. If the token is invalid, the method will throw an error. 
 
 ```js
 // controllers/test-jwt.js
@@ -237,6 +237,6 @@ router.post('/verify-token', (req, res) => {
 });
 ```
 
-Using Postman, make a POST request to `http://localhost:3000/test-jwt/verify-token`. You should see a response with the payload that was used to create the token. Notice that the payload is the mock user we created in the previous route! This will come in handy when we start to use JWTs for authentication.
+Using Postman, make a POST request to `http://localhost:3000/test-jwt/verify-token`. You should see a response with the payload used to create the token. Notice that the payload is the mock user we created in the previous route! This will come in handy when we start to use JWTs for authentication.
 
-We can either keep these routes in our application for testing purposes or remove them. If we remove them, we will need to remove the `test-jwt.js` file and the require and use statements in the `server.js` file. Let's take these ideas of siging and verifying JWTs and apply them to our application in the next section.
+We can keep these routes in our application for testing or remove them. If we remove them, we must remove the `test-jwt.js` file and the require and use statements in the `server.js` file. In the next section, let's take these ideas of signing and verifying JWTs and apply them to our application.
