@@ -48,3 +48,4 @@ router.post('/signin', async (req, res) => {
 });
 ```
 
+Fantastic! We now have a working Sign In route that will check the user's credentials, and then create and supply a JWT back to the user if their password matches the hashed password on the server. Next, we'll work on using the token to protect routes in our app! 
