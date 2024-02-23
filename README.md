@@ -16,7 +16,7 @@ tktk Write a short but descriptive summary of the content in this module.
 | ------ | ------ |
 | [Setup](./setup/README.md) | Setting up the development environment |
 | [Concepts](./concepts/README.md) | Describe the use of JWTS as an authentication strategy |
-| [Setting Up JWTs](./setting-up-jwts/README.md) | Sign and Verift JWTs in Express |
+| [Setting Up JWTs](./setting-up-jwts/README.md) | Sign and Verify JWTs in Express |
 | [Sign Up Route](./sign-up-route/README.md) | Implement a sign up route with express and jwts |
 | [Sign In Route](./sign-in-route/README.md) | Implement a sign in route with express and jwts |
 | [Protecting Routes](./protecting-routes/README.md) | Protect authenticated express routes |           
