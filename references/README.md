@@ -1,4 +1,4 @@
-# ![[tktk Module Name] - References](./assets/hero.png)
+# ![Authenticating an Express API with JWT - References](./assets/hero.png)
 
 ## Lesson references
 
