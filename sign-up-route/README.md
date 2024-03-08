@@ -148,6 +148,12 @@ The last thing we have to do for this route is handle any errors that might happ
 // ... require statements and constant above
 router.post('/signup', async (req, res) => {
     try {
+        // Check if the username is already taken
+        const userInDatabase = await User.findOne({ username: req.body.username });
+        if (userInDatabase) {
+            return res.status(400).json({error:'Username already taken.'});
+        }
+        // Create a new user with hashed password
         const user = await User.create({
             username: req.body.username,
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH)
