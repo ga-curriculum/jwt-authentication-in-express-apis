@@ -54,4 +54,31 @@ router.post('/signin', async (req, res) => {
 });
 ```
 
-Fantastic! We now have a working Sign In route that will check the user's credentials, and then create and supply a JWT back to the user if their password matches the hashed password on the server. Next, we'll work on using the token to protect routes in our app! 
+Fantastic! We now have a working Sign In route that will check the user's credentials, and then create and supply a JWT back to the user if their password matches the hashed password on the server. 
+
+## Refactoring the Sign Up Process
+
+In most applications, signing up for a new account will automatically authenticate the new user. Let's implement that by adding our fancy new `jwt` code to the response from our `/users/signup` route, and including the token in our response as well:
+
+```js
+router.post('/signup', async (req, res) => {
+    try {
+        // Check if the username is already taken
+        const userInDatabase = await User.findOne({ username: req.body.username });
+        if (userInDatabase) {
+            return res.json({error: 'Username already taken.'});
+        }
+        // Create a new user with hashed password
+        const user = await User.create({
+            username: req.body.username,
+            hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH)
+        })
+        const token = jwt.sign({ username: user.username, _id: user._id }, process.env.JWT_SECRET);
+        res.status(201).json({ user, token });
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+```
+
+Next, we'll work on using the token to protect routes in our app! 
