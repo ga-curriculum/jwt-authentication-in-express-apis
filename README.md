@@ -2,7 +2,7 @@
 
 ## About
 
-tktk Write a short but descriptive summary of the content in this module.
+In this lesson, we set up a basic authentication strategy in Express using JavaScript Web Tokens for data encryption and transfer.
 
 ## Prerequisites
 

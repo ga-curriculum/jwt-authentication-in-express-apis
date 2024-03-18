@@ -111,7 +111,9 @@ We will create a new user using the `create` method on the user model. For the f
 - The password to be hashed. 
 - The salt length to generate.
 
-Once we create the new user, we will want to send the status of `201` created along with the user to the client:
+Once we create the new user, we will want to send the status of `201` created along with the user to the client. 
+
+Of course, it's also vital that we don't end up with two users with the same username, so we'll also add a database call checking whether the username is already taken before creating a new one.
 
 ```js
 // controllers/users.js
@@ -122,6 +124,11 @@ const SALT_LENGTH = 12;
 
 router.post('/signup', async (req, res) => {
     try {
+        // Check if the username is already taken
+        const userInDatabase = await User.findOne({ username: req.body.username });
+        if (userInDatabase) {
+            return res.status(400).json({error:'Username already taken.'});
+        }
         // Create a new user with hashed password
         const user = await User.create({
             username: req.body.username,
@@ -141,6 +148,12 @@ The last thing we have to do for this route is handle any errors that might happ
 // ... require statements and constant above
 router.post('/signup', async (req, res) => {
     try {
+        // Check if the username is already taken
+        const userInDatabase = await User.findOne({ username: req.body.username });
+        if (userInDatabase) {
+            return res.status(400).json({error:'Username already taken.'});
+        }
+        // Create a new user with hashed password
         const user = await User.create({
             username: req.body.username,
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH)

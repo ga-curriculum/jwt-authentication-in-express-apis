@@ -20,6 +20,13 @@ Create `server.js`, `.env`, and `.gitignore` files:
 touch server.js .env .gitignore
 ```
 
+Fill in the `.gitignore` file with the following:
+
+```
+node_modules
+.env
+```
+
 In the terminal, create a `package.json` with all of the default settings and install the packages by running the following commands:
 
 ```bash
@@ -60,7 +67,7 @@ app.listen(3000, () => {
 Add your MongoDB URI to the `.env` file:
 
 ```bash
-MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/pets?retryWrites=true
+MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/express-auth-jwt?retryWrites=true
 ```
 
 > If you are unsure of where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab. 

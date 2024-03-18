@@ -102,7 +102,7 @@ We have our **payload**; now we must create the **secret key**. Inside of your `
 JWT_SECRET=L2d6ZjAV
 ```
 
-Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4inK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. As the name implies, the key to the secret key should be secret and not shared or left in your code where someone would have access to view it. 
+Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4inK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. As the name implies, the key to the secret key should be secret and not shared or left in your code where someone would have access to view it. This is why we're storing it in the `.env` file, which you should always be sure to include in your `.gitignore` file to prevent it from surfacing on github.
 
 > 🧠 If you want a more secure secret key, you can use a password generator to create a random string of characters. Or, simply bash on your keyboard for a few seconds and use that as your secret key. Just remember to remove spaces.
 
@@ -163,7 +163,7 @@ Inside the `test-jwt.js` file create a new route to receive a POST request. This
 
 ```js
 // controllers/test-jwt.js
-router.get('/verify-token', (req, res) => {
+router.post('/verify-token', (req, res) => {
     res.json({ message: 'Token is valid.' });
 });
 ```
@@ -227,9 +227,9 @@ Now that we have the token, let's verify it's correct with the `verify` method f
 ```js
 // controllers/test-jwt.js
 router.post('/verify-token', (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    // Add in verify method
     try {
+        const token = req.headers.authorization.split(' ')[1];
+        // Add in verify method
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         res.json({ decoded });
     } catch (error) {
