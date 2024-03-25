@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - Setting up JWTs](./assets/hero.png)
+# ![JWT Authentication in Express APIs - Setting up JWTs](./assets/hero.png)
 
 **Learning objective:** By the end of this lesson, students will be able to explain how JSON Web Tokens use signing and verifying to authenticate users in an Express application.
 

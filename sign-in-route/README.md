@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - Sign In Route](./assets/hero.png)
+# ![JWT Authentication in Express APIs - Sign In Route](./assets/hero.png)
 
 **Learning objective:** By the end of this lesson, students will be able to implement a sign in route with express and JWTs.
 

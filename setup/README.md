@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - Setup](./assets/hero.png)
+# ![JWT Authentication in Express APIs - Setup](./assets/hero.png)
 
 ## Setup
 

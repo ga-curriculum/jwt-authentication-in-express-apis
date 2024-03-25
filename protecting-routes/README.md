@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - Protecting Routes](./assets/hero.png)
+# ![JWT Authentication in Express APIs - Protecting Routes](./assets/hero.png)
 
 **Learning objective:** By the end of this lesson, students will be able to use a token payload to protect a route from unauthorized users.
 

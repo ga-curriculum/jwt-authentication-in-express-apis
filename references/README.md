@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - References](./assets/hero.png)
+# ![JWT Authentication in Express APIs - References](./assets/hero.png)
 
 ## Lesson references
 
