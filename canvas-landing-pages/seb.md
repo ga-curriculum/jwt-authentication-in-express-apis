@@ -1,1 +1,1 @@
-# ![Authenticating an Express API with JWT](../assets/tktk-hero.png)
+# ![Authenticating an Express API with JWT](../assets/hero.png)

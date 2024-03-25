@@ -1,4 +1,4 @@
-# ![Authenticating an Express API with JWT - Sign Up Route](./assets/tktk-hero.png)
+# ![Authenticating an Express API with JWT - Sign Up Route](./assets/hero.png)
 
 **Learning objective:** By the end of this lesson, students will be able to implement a sign up route with Express and JWTs.
 
