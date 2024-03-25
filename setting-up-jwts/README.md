@@ -149,6 +149,8 @@ router.get('/sign-token', (req, res) => {
 
 Using Postman, make a GET request to `http://localhost:3000/test-jwt/sign-token`. You should see a response with a token in it. Make sure you can see the token before you move on.
 
+![Token](./assets/token.png)
+
 We have successfully created a JWT and sent it to the client! We will use this token in the next lesson to verify the user.
 
 ## Verifying a JWT
@@ -182,11 +184,11 @@ To send the token to the server, we'll once again use Postman. Open Postman and 
 
 Still in Postman, navigate to the request you created to test the `verify-token` route. Under the URL bar, select the `Authorization` tab.
 
-[tktk Hunter - screenshots and highlight the auth tab on Postman]
+![Auth tab](./assets/auth-tab.png)
 
 Once in the `Authorization` tab, select `Bearer Token` from the dropdown. Paste the token you copied from the previous route in the input field that appears.
 
-[tktk Hunter - screenshots and highlight the bearer token dropdown and the input field]
+![Bearer token](./assets/bearer-token.png)
 
 When we send a request to the `verify-token` route, the token will be included in the request's headers. We can access this token in the route handler using `req.headers.authorization`.
 

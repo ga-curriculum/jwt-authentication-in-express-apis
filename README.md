@@ -20,7 +20,6 @@ In this lesson, we set up a basic authentication strategy in Express using JavaS
 | [Sign In Route](./sign-in-route/README.md) | Implement a sign in route with express and JWTs |
 | [Protecting Routes](./protecting-routes/README.md) | Protect authenticated express routes |           
 
-
 ## References
 
 📖 [Reference Materials](./references/README.md)
