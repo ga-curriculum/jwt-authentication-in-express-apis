@@ -18,7 +18,7 @@ JSON Web Tokens (JWT) are a type of token authentication. JWT utilizes a JSON-fo
 
 ## Anatomy of a JWT
 
-![tktk Hunter - can we include the parts of a JWT here? something like this but way less detailed](./assets/jwt-inspo.png)
+![JWT Anatomy](./assets/jwt-anatomy-a.png)
 
 A JSON Web Token consists of three main parts:
 
@@ -28,6 +28,8 @@ A JSON Web Token consists of three main parts:
 
 3. **Signature**: The signature is used to make sure the token hasn't been altered after it was issued and to verify that it's truly from the source it claims to be from. It's created by taking the encoded header, the encoded payload, and a secret key, and then applying the algorithm specified in the header.
 
+![JWT Anatomy](./assets/jwt-anatomy-b.png)
+
 Together, these parts are concatenated with dots `.` separating them, forming the compact form of the JWT: `header.payload.signature`. This structure ensures that JWTs are URL-safe, meaning they can be passed in HTTP environments without causing issues with encoding.
 
 ## Authentication flow with JWT
@@ -36,23 +38,18 @@ Let's go through the flow of how JWT works in an application.
 
 ### Token is generated
 
-![tktk Hunter -  need visual of the server-client interaction and token generation process.]()
+![JWT Diagram](./assets/token-generated.png)
 
 1. **User Login**: The user submits their credentials (username and password) to the server.
 2. **Verify Credentials**: The server checks the credentials. If they are valid, it proceeds to generate a JWT.
 3. **Create JWT**: The JWT is created with a JSON payload that includes user details such as user ID and username. This payload may also contain roles or permissions.
 4. **Encrypt Token**: The JWT is then encrypted with a secret key that is only known to the server, resulting in a secure, encrypted token.
-
-### Token is issued to client
-
-![tktk Hunter -  need visual showing how the JWT is sent to the client and stored for future use.]()
-
-1. **Issue Token**: After successful authentication, the encrypted JWT is sent back to the client.
-2. **Store Token**: The client securely stores the JWT, typically in local storage or cookies, ready for future requests.
+5. **Issue Token**: After successful authentication, the encrypted JWT is sent back to the client.
+6. **Store Token**: The client securely stores the JWT, typically in local storage or cookies, ready for future requests.
 
 ### Token is used for future requests to server
 
-![tktk Hunter -  need visual showing the server verifying the JWT included in an incoming HTTP request.]()
+![JWT Diagram](./assets/token-used.png)
 
 1. **Include Token in Requests**: For requests to access protected resources, the client includes the stored JWT in the HTTP headers.
 2. **Extract and Decrypt Token**: The server extracts the JWT from the headers, decrypts it with its secret key, and verifies its authenticity.
