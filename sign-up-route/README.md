@@ -2,7 +2,7 @@
 
 **Learning objective:** By the end of this lesson, students will be able to implement a sign up route with Express and JWTs.
 
-## User Model
+## User model
 
 This section will set up an Express application to use JSON Web Tokens (JWT) for **authentication** and **authorization**. For this, we will need a user model to store user information. We'll use Mongoose to create a user model with the following fields:
 
@@ -11,7 +11,7 @@ This section will set up an Express application to use JSON Web Tokens (JWT) for
 | username       | String | User's username        |
 | hashedPassword | String | User's hashed password |
 
-### 🎓 You do: Create a User Model
+##  🎓 You Do: Create a user model
 
 The goal of this exercise is to create a user model using Mongoose. Create a new file called `user.js` in a `models` directory and define the user schema and model.
 
@@ -22,11 +22,17 @@ The user schema should have the following fields:
 
 Make sure to create and export the user model at the end of the file.
 
-## Sign Up Route
+## Sign up route
 
 Next let's create a route to allow users to sign up for our application. This route will be responsible for creating a new user in the database. For this step, we will use `bcrypt` to hash the user's password before saving it to the database. 
 
-Create a new file in the `controllers` folder called `users.js`. Inside `users.js`, we want to set up a new router and create a POST route for `/signup`. This route will be responsible for creating a new user in the database, but for now, let's just send back a message to the user to let them know that the route is working.
+Create a new file in the `controllers` folder called `users.js`. 
+
+```bash
+touch controllers/users.js 
+```
+
+Inside `users.js`, we want to set up a new router and create a POST route for `/signup`. This route will be responsible for creating a new user in the database, but for now, let's just send back a message to the user to let them know that the route is working.
 
 ```js
 // /controllers/users.js
@@ -60,7 +66,9 @@ Using Postman, make a POST request to `http://localhost:3000/users/signup` and c
 
 ### Bcrypt
 
-We never want to save passwords directly to the database. This is because if our database gets hacked people's passwords would be exposed to the hackers which could lead to other accounts using the same password being stolen.
+Storing passwords directly in a database is a significant security risk. If someone hacks into our database, exposed passwords could allow hackers access not only to our system but potentially to other systems where users have reused their passwords.
+
+To mitigate this risk, we use an encryption package called [Bcrypt](https://www.npmjs.com/package/bcrypt).
 
 Bcrypt is a package that will encrypt passwords for us, so that we are not saving them directly to the database. Knowing precisely how Bcrypt works is not essential, but let's review a high-level overview of what it's doing to our passwords:
 
@@ -165,7 +173,9 @@ router.post('/signup', async (req, res) => {
 });
 ```
 
-Test this using Postman to make a POST request to `http://localhost:3000/users/signup`. Make sure to send the correct body in the request. It should be formatted as such: 
+Test this using Postman to make a POST request to `http://localhost:3000/users/signup`. Make sure to select `raw` and the dropdown data type from "Text" to "JSON". 
+
+the body of your request should be formatted as such: 
 
 ```json
 {
@@ -176,7 +186,7 @@ Test this using Postman to make a POST request to `http://localhost:3000/users/s
 
 We should receive a response that includes the `hashedPassword`. While this is not our plain text password, we still shouldn't send it inside a JSON object. It should live safely inside our database. Let's fix that next. 
 
-## Remove Hashed Password from Response
+## Remove hashed password from response
 
 We will need to add a function to our Schema to remove the hashed password from our JSON response.
 

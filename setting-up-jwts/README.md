@@ -4,9 +4,9 @@
 
 ## JSON Web Tokens (JWT) in Express
 
-Before creating routes to handle signing up and signing in users, let's look at how we can use JSON Web Tokens (JWT) in an Express application.
+Before creating routes to handle signing up and signing in users, let's look at how we can use [JSON Web Tokens (JWT)](https://www.npmjs.com/package/jsonwebtoken) in an Express application.
 
-Like all other npm packages, we must install the `jsonwebtoken` package.
+Like all external tools, we must first install the `jsonwebtoken` package.
 
 ```bash
 npm i jsonwebtoken
@@ -16,20 +16,31 @@ JWTs are a way to securely transmit information between parties as a JSON object
 
 > No need to know what `HMAC`, `RSA`, or `ECDSA` are. Just know that they are different algorithms used to sign JWTs.
 
-We don't have to know exactly how JWTs are created and verified, but we still need to know how to use them in our application.
+While it's not necessary to master the details of how JSON Web Tokens (JWTs) are created and verified, knowing how to implement them in your application is essential.
 
-Using JWTs breaks down into two actions:
+Using JWTs involves two main actions:
 
-- **Signing**: Creating a JWT and sending it to the client.
-- **Verifying**: Receiving a JWT from the client and verifying it.
+- **Signing**: This is the process of creating a JWT and sending it to the client. This token serves as a secure way for the server to recognize the client in future transactions.
+- **Verifying**: This involves receiving a JWT from the client and verifying its authenticity and integrity to ensure it was issued by the server and hasn't been tampered with.
 
-We will create two routes to handle these two actions in our Express application. These will just be test routes that we won't use in the final application, but they will help us understand how to use JWTs in Express.
+To practice these concepts, we'll set up two routes in our Express application:
+
+- A route for **signing**, where we create a JWT and send it to the client.
+- A route for **verifying**, where we check the validity of a received JWT.
+
+These routes are for learning purposes and will not be part of the final application. However, they are crucial for understanding how to integrate JWTs into your Express projects.
 
 ## Signing a JWT
 
-Even though we will not use these routes for our final project, we'll still follow best practices and create a `controllers` directory to hold our route handlers.
+Create a new `controllers` folder, and touch a new file inside of it called `test-jwt.js`.
 
-Create a new `controllers` folder, and touch a new file inside of it called `test-jwt.js`. Once created, let's set up the file with a `router` and an empty GET route. This route should follow the structure below:
+```bash
+mkdir controllers
+touch controllers/test-jwt.js
+```
+
+Once created, let's set up the file with a `router` and an empty GET route.
+This route should follow the structure below:
 
 - Route: `/sign-token`
 - Method: `GET`
@@ -42,7 +53,7 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/sign-token', (req, res) => {
-    res.json({ message: 'You are authorized!' });
+  res.json({ message: 'You are authorized!' });
 });
 
 module.exports = router;
@@ -72,7 +83,7 @@ The `sign` method takes three arguments:
 2. The secret key to sign the JWT with.
 3. An (optional) options object.
 
-The **payload** is the information we want to include in the JWT. This can be any JSON object. We want to specify that this token belongs to a specific user and no one else. For now, we will include a mock user object with a `username`, `password`, and `_id` field. 
+The **payload** is the information we want to include in the JWT. This can be any JSON object. We want to specify that this token belongs to a specific user and no one else. For now, we will include a mock user object with a `username`, `password`, and `_id` field.
 
 The **secret key** is a string used to sign the JWT. This key is unique to our application and should be kept secret. We'll be storing it in our `.env` file.
 
@@ -85,12 +96,12 @@ Remove the `res.json` method from the route and replace it with a mock user obje
 ```js
 // controllers/test-jwt.js
 router.get('/sign-token', (req, res) => {
-    // Mock user object added
-    const user = {
-        _id: 1,
-        username: 'test',
-        password: 'test'
-    }
+  // Mock user object added
+  const user = {
+    _id: 1,
+    username: 'test',
+    password: 'test',
+  };
 });
 ```
 
@@ -102,7 +113,7 @@ We have our **payload**; now we must create the **secret key**. Inside of your `
 JWT_SECRET=L2d6ZjAV
 ```
 
-Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4inK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. As the name implies, the key to the secret key should be secret and not shared or left in your code where someone would have access to view it. This is why we're storing it in the `.env` file, which you should always be sure to include in your `.gitignore` file to prevent it from surfacing on github.
+Before moving on, let's talk about the secret key. This key can be anything as long as it is a string. This could be as simple as the word `supersecret` or `catsarecool`; or as complex as `4ilK]I+X+;n2+g"*>AMQc{p99)9DB@a@`. As the name implies, the key to the secret key should be secret and not shared or left in your code where someone would have access to view it. This is why we're storing it in the `.env` file, which you should always be sure to include in your `.gitignore` file to prevent it from surfacing on github.
 
 > 🧠 If you want a more secure secret key, you can use a password generator to create a random string of characters. Or, simply bash on your keyboard for a few seconds and use that as your secret key. Just remember to remove spaces.
 
@@ -121,13 +132,13 @@ Pass both the mock user object and the secret key to the `sign` method and assig
 ```js
 // controllers/test-jwt.js
 router.get('/sign-token', (req, res) => {
-    const user = {
-        id: 1,
-        username: 'test',
-        password: 'test'
-    }
-    // Create a token using the sign method
-    const token = jwt.sign({ user }, process.env.JWT_SECRET);
+  const user = {
+    id: 1,
+    username: 'test',
+    password: 'test',
+  };
+  // Create a token using the sign method
+  const token = jwt.sign({ user }, process.env.JWT_SECRET);
 });
 ```
 
@@ -136,14 +147,14 @@ Send the token back to the client in the response:
 ```js
 // controllers/test-jwt.js
 router.get('/sign-token', (req, res) => {
-    const user = {
-        id: 1,
-        username: 'test',
-        password: 'test'
-    }
-    const token = jwt.sign({ user }, process.env.JWT_SECRET);
-    // Send the token back to the client
-    res.json({ token });
+  const user = {
+    id: 1,
+    username: 'test',
+    password: 'test',
+  };
+  const token = jwt.sign({ user }, process.env.JWT_SECRET);
+  // Send the token back to the client
+  res.json({ token });
 });
 ```
 
@@ -155,7 +166,7 @@ We have successfully created a JWT and sent it to the client! We will use this t
 
 ## Verifying a JWT
 
-Just like with the signing route, our verifying route will not be a part of our finished application and will just be used for testing. 
+Just like with the signing route, our verifying route will not be a part of our finished application and will just be used for testing.
 
 Inside the `test-jwt.js` file create a new route to receive a POST request. This route should follow the structure below:
 
@@ -166,7 +177,7 @@ Inside the `test-jwt.js` file create a new route to receive a POST request. This
 ```js
 // controllers/test-jwt.js
 router.post('/verify-token', (req, res) => {
-    res.json({ message: 'Token is valid.' });
+  res.json({ message: 'Token is valid.' });
 });
 ```
 
@@ -197,8 +208,8 @@ In our code, let's return to our `verify-token` route. Remove the placeholder me
 ```js
 // controllers/test-jwt.js
 router.post('/verify-token', (req, res) => {
-    const token = req.headers.authorization;
-    res.json({ token });
+  const token = req.headers.authorization;
+  res.json({ token });
 });
 ```
 
@@ -206,7 +217,7 @@ Test with Postman to ensure you can see the token in the response. You should se
 
 ```json
 {
-    "token": "Bearer <token here>"
+  "token": "Bearer <token here>"
 }
 ```
 
@@ -217,8 +228,8 @@ We'll use the `split` method to remove the word `Bearer` from the token. This me
 ```js
 // controllers/test-jwt.js
 router.post('/verify-token', (req, res) => {
-    const token = req.headers.authorization.split(' ')[1];
-    res.json({ token });
+  const token = req.headers.authorization.split(' ')[1];
+  res.json({ token });
 });
 ```
 
@@ -228,15 +239,16 @@ Now that we have the token, let's verify it's correct with the `verify` method f
 
 ```js
 // controllers/test-jwt.js
+
 router.post('/verify-token', (req, res) => {
-    try {
-        const token = req.headers.authorization.split(' ')[1];
-        // Add in verify method
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        res.json({ decoded });
-    } catch (error) {
-        res.status(401).json({ error: 'Invalid token.' });
-    }
+  try {
+    const token = req.headers.authorization.split(' ')[1];
+    // Add in verify method
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    res.json({ decoded });
+  } catch (error) {
+    res.status(401).json({ error: 'Invalid token.' });
+  }
 });
 ```
 
