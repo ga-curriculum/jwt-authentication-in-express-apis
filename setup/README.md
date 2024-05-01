@@ -3,28 +3,22 @@
 ## Setup
 
 Open your Terminal application and navigate to your `~/code/ga/lectures` directory:
+
 ```bash
 cd ~/code/ga/lectures
 ```
 
-Make a new directory called `auth-express-jwt`, then enter this directory:
+Make a new directory called `jwt-authentication-in-express-apis`, then enter this directory:
 
 ```bash
-mkdir auth-express-jwt
-cd auth-express-jwt
+mkdir jwt-authentication-in-express-apis
+cd jwt-authentication-in-express-apis
 ```
 
 Create `server.js`, `.env`, and `.gitignore` files:
 
 ```bash
 touch server.js .env .gitignore
-```
-
-Fill in the `.gitignore` file with the following:
-
-```
-node_modules
-.env
 ```
 
 In the terminal, create a `package.json` with all of the default settings and install the packages by running the following commands:
@@ -40,7 +34,14 @@ Open the contents of the directory in VS Code:
 code .
 ```
 
-Add boilerplate code to the `server.js` file:
+Fill in the `.gitignore` file with the following:
+
+```
+node_modules
+.env
+```
+
+Add the following boilerplate code to the `server.js` file:
 
 ```js
 const dotenv = require('dotenv');
@@ -52,7 +53,7 @@ const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('connected', () => {
-    console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
+  console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
 app.use(express.json());
@@ -60,7 +61,7 @@ app.use(express.json());
 // Routes go here
 
 app.listen(3000, () => {
-    console.log('The express app is ready!');
+  console.log('The express app is ready!');
 });
 ```
 
@@ -70,7 +71,7 @@ Add your MongoDB URI to the `.env` file:
 MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/express-auth-jwt?retryWrites=true
 ```
 
-> If you are unsure of where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab. 
+> If you are unsure of where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab.
 
 Finally, run the server with `nodemon`:
 
