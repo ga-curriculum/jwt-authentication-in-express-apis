@@ -8,11 +8,11 @@ Open your Terminal application and navigate to your `~/code/ga/lectures` directo
 cd ~/code/ga/lectures
 ```
 
-Make a new directory called `jwt-authentication-in-express-apis`, then enter this directory:
+Make a new directory called `express-api-jwt-auth-template`, then enter this directory:
 
 ```bash
-mkdir jwt-authentication-in-express-apis
-cd jwt-authentication-in-express-apis
+mkdir express-api-jwt-auth-template
+cd express-api-jwt-auth-template
 ```
 
 Create `server.js`, `.env`, and `.gitignore` files:
@@ -68,7 +68,7 @@ app.listen(3000, () => {
 Add your MongoDB URI to the `.env` file:
 
 ```bash
-MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/express-auth-jwt?retryWrites=true
+MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/express-api-jwt-auth?retryWrites=true
 ```
 
 > If you are unsure of where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab.
