@@ -1,4 +1,7 @@
-# ![JWT Authentication in Express APIs - Sign Up Route](./assets/hero.png)
+<h1>
+  <span class="headline">JWT Authentication in Express APIs</span>
+  <span class="subhead">Sign up Route</span>
+</h1>
 
 **Learning objective:** By the end of this lesson, students will be able to implement a sign up route with Express and JWTs.
 

@@ -1,18 +1,11 @@
-# ![JWT Authentication in Express APIs](./assets/hero.png)
+<h1>
+  <span class="prefix"></span>
+  <span class="headline">JWT Authentication in Express APIs</span>
+</h1>
 
 ## About
 
 In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) authentication. We'll cover the basics of JWTs, including their functionality and importance in securing user data. You'll set up an Express server and integrate JWT authentication to manage user access securely. By the end of this module, you'll have the skills to secure API routes and effectively control user access, providing a solid foundation for implementing JWT-based authentication in any web application.
-
-## Prerequisites
-
-- RESTful routing
-- Environment Variables
-- Intro to Express
-- Intro to Asynchronous Programming
-- Intro to Mongoose
-- MongoDB Atlas
-- Postman
 
 ## Content
 
@@ -29,11 +22,28 @@ In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) 
 
 📖 [Reference Materials](./references/README.md)
 
-## Solution code
+## Internal
+
+### Prerequisites
+
+- RESTful routing
+- Environment Variables
+- Intro to Express
+- Intro to Asynchronous Programming
+- Intro to Mongoose
+- MongoDB Atlas
+- Postman
+
+### Solution code
 
 🏁 [Solution code](https://git.generalassemb.ly/modular-curriculum-all-courses/express-api-jwt-auth-template)
 
-## Internal resources
+### Course landing pages
+
+- [SEB - Software Engineering Bootcamp](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/jwt-authentication-in-express-apis/canvas-landing-pages/seb.html)
+- [Fallback](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/jwt-authentication-in-express-apis/canvas-landing-pages/fallback.html)
+
+### Resources
 
 ✏️ [Instructor Guide](./internal-resources/instructor-guide.md)
 
@@ -43,4 +53,4 @@ In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) 
 
 ---
 
-**Find a 👾 bug 👾 or have suggestions? [Let us know](https://git.generalassemb.ly/modular-curriculum-all-courses/universal-resources-internal/blob/main/module-feedback.md)!**
+**Find a 👾 bug 👾 or have suggestions? [Let us know](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/universal-resources-internal/module-feedback.html)!**
