@@ -39,14 +39,14 @@ code .
 
 Fill in the `.gitignore` file with the following:
 
-```
+```plaintext
 node_modules
 .env
 ```
 
 Add the following boilerplate code to the `server.js` file:
 
-```js
+```javascript
 const dotenv = require('dotenv');
 dotenv.config();
 const express = require('express');
@@ -79,7 +79,7 @@ MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/expr
 Finally, run the server with `nodemon`:
 
 ```bash
-nodemon server.js
+nodemon
 ```
 
 We will be using Postman during this lesson to interact with our API. If you do not have Postman installed, please refer to the Postman Setup Lab.
