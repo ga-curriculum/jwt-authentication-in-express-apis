@@ -249,8 +249,8 @@ router.post('/verify-token', (req, res) => {
     // Add in verify method
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     res.json({ decoded });
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid token.' });
+  } catch (err) {
+    res.status(401).json({ err: 'Invalid token.' });
   }
 });
 ```

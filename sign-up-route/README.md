@@ -111,7 +111,7 @@ Inside our `signup` route, remove the placeholder `res.json`, add `async` to the
 router.post('/signup', async (req, res) => {
     try {
         // Set up for try
-    } catch (error) {
+    } catch (err) {
         // Set up for catch
     }
 });
@@ -138,7 +138,7 @@ router.post('/signup', async (req, res) => {
         // Check if the username is already taken
         const userInDatabase = await User.findOne({ username: req.body.username });
         if (userInDatabase) {
-            return res.status(400).json({error:'Username already taken.'});
+            return res.status(400).json({err:'Username already taken.'});
         }
         // Create a new user with hashed password
         const user = await User.create({
@@ -146,7 +146,7 @@ router.post('/signup', async (req, res) => {
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH)
         })
         res.status(201).json({ user });
-    } catch (error) {
+    } catch (err) {
         // Set up for catch
     }
 });
@@ -162,7 +162,7 @@ router.post('/signup', async (req, res) => {
         // Check if the username is already taken
         const userInDatabase = await User.findOne({ username: req.body.username });
         if (userInDatabase) {
-            return res.status(400).json({error:'Username already taken.'});
+            return res.status(400).json({err:'Username already taken.'});
         }
         // Create a new user with hashed password
         const user = await User.create({
@@ -170,15 +170,15 @@ router.post('/signup', async (req, res) => {
             hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH)
         })
         res.status(201).json({ user });
-    } catch (error) {
-        res.status(400).json({ error: error.message });
+    } catch (err) {
+        res.status(400).json({ err: err.message });
     }
 });
 ```
 
 Test this using Postman to make a POST request to `http://localhost:3000/users/signup`. Make sure to select `raw` and the dropdown data type from "Text" to "JSON". 
 
-the body of your request should be formatted as such: 
+the body of your request should be formatted as such:
 
 ```json
 {

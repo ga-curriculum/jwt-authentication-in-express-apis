@@ -30,8 +30,8 @@ router.post('/verify-token', (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     res.json({ decoded });
-  } catch (error) {
-    res.status(401).json({ error: 'Invalid token.' });
+  } catch (err) {
+    res.status(401).json({ err: 'Invalid token.' });
   }
 });
 ```
@@ -58,9 +58,9 @@ function verifyToken(req, res, next) {
     req.user = decoded;
     // Call next() to invoke the next middleware function
     next();
-  } catch (error) {
+  } catch (err) {
     // If any errors, send back a 401 status and an 'Invalid token.' error message
-    res.status(401).json({ error: 'Invalid token.' });
+    res.status(401).json({ err: 'Invalid token.' });
   }
 }
 
@@ -98,11 +98,11 @@ router.get('/:userId', async (req, res) => {
       throw new Error('Profile not found.');
     }
     res.json({ user });
-  } catch (error) {
+  } catch (err) {
     if (res.statusCode === 404) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json({ err: err.message });
     } else {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ err: err.message });
     }
   }
 });
@@ -161,10 +161,10 @@ Fortunately, our `verifyToken` middleware stores the `_id` of the request's user
 // controllers/profiles.js
 
 router.get('/:userId', verifyToken, async (req, res) => {
-    try {
-        if (req.user._id !== req.params.userId){ // check the ID of the user!
-            return res.status(401).json({ error: "Unauthorized"})
-        }
+  try {
+    if (req.user._id !== req.params.userId){ // check the ID of the user!
+      return res.status(401).json({ err: "Unauthorized"})
+    }
 ```
 
 There we have it! This strategy is applicable to any case where you want to restrict actions to the user who owns a specific resource, like editing or deleting their posts on social media.
