@@ -207,7 +207,7 @@ router.get('/:userId', verifyToken, async (req, res) => {
     // If the user is looking for the details of another user, block the request
     // Send a 403 status code to indicate that the user is unauthorized
     if (req.user._id !== req.params.userId){
-      return res.status(403).json({ err: "Unauthorized"})
+      return res.status(403).json({ err: "Unauthorized"});
     }
 
     const user = await User.findById(req.params.userId);
