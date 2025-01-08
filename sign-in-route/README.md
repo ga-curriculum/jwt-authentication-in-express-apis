@@ -32,7 +32,7 @@ router.post('/sign-in', async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     // If the user doesn't exist, return a 401 status code with a message
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
 
     res.status(200).json({ message: 'Signing in!' });
@@ -57,7 +57,7 @@ router.post('/sign-in', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
 
     // Check if the password is correct using bcrypt
@@ -66,7 +66,7 @@ router.post('/sign-in', async (req, res) => {
     );
     // If the password is incorrect, return a 401 status code with a message
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
 
     res.status(200).json({ message: 'Signing in!' });
@@ -93,14 +93,14 @@ router.post('/sign-in', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
-      return res.status(401).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
 
     const isPasswordCorrect = bcrypt.compareSync(
       req.body.password, user.hashedPassword
     );
     if (!isPasswordCorrect) {
-      return res.status(401).json({ message: 'Invalid credentials.' });
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
 
     // Construct the payload
