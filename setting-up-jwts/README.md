@@ -94,7 +94,7 @@ The **options object** is an object that allows us to specify how the JWT should
 
 Now that we understand the `sign()` method, let's use it in our `/test-jwt/sign-token` route.
 
-Remove the `res.json*()` method from the route and replace it with a mock user object:
+Remove the `res.json()` method from the route and replace it with a mock user object:
 
 ```javascript
 // controllers/test-jwt.js

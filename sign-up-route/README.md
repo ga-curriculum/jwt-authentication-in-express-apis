@@ -71,7 +71,7 @@ Using Postman, make a POST request to `http://localhost:3000/auth/sign-up` and c
 
 ### bcrypt
 
-Storing plain text passwords in a database is a significant security risk, demonstrating blatant developer negligence. If the database is exposed, nothing prevents a bad actor from accessing all the user's passwords. The risk is even higher to users that use the same password for multiple accounts (as many do), the risk is even higher.
+Storing plain text passwords in a database is a significant security risk. If the database is exposed, nothing prevents a bad actor from accessing every user's password. The risk is even higher to users that use the same password for multiple online accounts (as many do).
 
 <blockquote class="extreme-warning">
   Never store passwords in plain text in a database. Ever.
