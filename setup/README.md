@@ -52,6 +52,8 @@ dotenv.config();
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
+const logger = require('morgan');
 
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -59,7 +61,9 @@ mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+app.use(cors());
 app.use(express.json());
+app.use(logger('dev'));
 
 // Routes go here
 
@@ -74,7 +78,7 @@ Add your MongoDB URI to the `.env` file:
 MONGODB_URI=mongodb+srv://<username>:<password>@sei-w0kys.azure.mongodb.net/express-api-jwt-auth?retryWrites=true
 ```
 
-> If you are unsure of where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab.
+> ⚠️ If you are unsure where to obtain your MongoDB URI, please refer to the MongoDB Atlas Setup Lab.
 
 Finally, run the server with `nodemon`:
 
