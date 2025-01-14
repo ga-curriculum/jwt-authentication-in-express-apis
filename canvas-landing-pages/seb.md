@@ -1,4 +1,7 @@
-# ![JWT Authentication in Express APIs](../assets/hero.png)
+<h1>
+  <span class="prefix"></span>
+  <span class="headline">JWT Authentication in Express APIs</span>
+</h1>
 
 ## About
 

@@ -1,97 +1,124 @@
-# ![JWT Authentication in Express APIs - Sign In Route](./assets/hero.png)
+<h1>
+  <span class="headline">JWT Authentication in Express APIs</span>
+  <span class="subhead">Sign-In Route</span>
+</h1>
 
-**Learning objective:** By the end of this lesson, students will be able to implement a sign in route with express and JWTs.
+**Learning objective:** By the end of this lesson, students will be able to implement a sign-in route with express and JWTs.
 
 ## Sign in route
 
-Now that a user can sign up, next let's create a route that allows users to sign in to our application. As with the sign up route, we'll be using `bcrypt` - this time to handle checking the user's credentials.
+Now that a user can sign up, let's create a route that allows users to sign in to our app. As with the sign-up route, we'll use bcrypt to check the user's credentials. Start by framing the route in the `auth.js` file with a simple response and error handling:
 
-We'll use the built in Bcrypt `compareSync()` method to check the user's password. This method takes two arguments - an unhashed password and a hashed password - and checks if they match. If so, the method returns `true`, otherwise it will return `false`.
+```javascript
+// controllers/auth.js
 
-For now, we'll just return a boilerplate message in the instance that the passwords match, return a different message for invalid credentials, and add our standard error handling in the `catch` block:
-
-```js
-// controllers/users.js
-
-router.post('/signin', async (req, res) => {
+router.post('/sign-in', async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
-    if (user && bcrypt.compareSync(req.body.password, user.hashedPassword)) {
-      res.json({ message: 'You are authorized!' });
-    } else {
-      res.json({ message: 'Invalid credentials.' });
-    }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(200).json({ message: 'Signing in!' });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
   }
 });
 ```
 
-Create a new user and save those credentials to test your `signin` route.
+We'll start by confirming the user has supplied a valid username. If the username is not found in the database, we'll return a 401 status code and a message that the credentials are invalid.
 
-Using Postman, make a POST request to `http://localhost:3000/users/signin` and check if you get the expected response.
+```javascript
+// controllers/auth.js
+
+router.post('/sign-in', async (req, res) => {
+  try {
+    // Look up the user by their username in the database
+    const user = await User.findOne({ username: req.body.username });
+    // If the user doesn't exist, return a 401 status code with a message
+    if (!user) {
+      return res.status(401).json({ err: 'Invalid credentials.' });
+    }
+
+    res.status(200).json({ message: 'Signing in!' });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+```
+
+If the user is found, we'll check if the password is correct.
+
+We'll use the bcrypt's `compareSync()` method to check the user's password. This method takes two arguments - a plain text password and a hashed password - and checks if they match. If so, the method returns `true`. Otherwise, it will return `false` - we'll store that in a variable called `isPasswordCorrect`.
+
+If the passwords don't match, we'll return a 401 status code and a message that the credentials are invalid, just like we did when the username didn't exist.
+
+> 🧠 Returning a generic message when the user has submitted a bad username or password is considered a better security practice than sending back a unique message specific to the invalid field.
+
+```javascript
+// controllers/auth.js
+
+router.post('/sign-in', async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.body.username });
+    if (!user) {
+      return res.status(401).json({ err: 'Invalid credentials.' });
+    }
+
+    // Check if the password is correct using bcrypt
+    const isPasswordCorrect = bcrypt.compareSync(
+      req.body.password, user.hashedPassword
+    );
+    // If the password is incorrect, return a 401 status code with a message
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ err: 'Invalid credentials.' });
+    }
+
+    res.status(200).json({ message: 'Signing in!' });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+});
+```
+
+Create a new user and save those credentials to test your `sign-in` route.
+
+Using Postman, make a POST request to `http://localhost:3000/auth/sign-in` and check if you get the expected response.
 
 ## Issue a token
 
-Next, we want to send a token back to the client in the instance that they are authorized to sign in. First, we'll have to import `jwt` into this file, the same way we did with the `test-jwt` controller. We'll create a new `token` variable, and assign it to the result of signing the token by passing the valid user's username as the payload, and the `JWT_SECRET` from our `.env` file as the secret key. Finally, we send this `token` to the client, giving it a status of `200` (OK).
+Next, we want to return a token to the client if they are authorized to sign in. This means our function will look identical to the sign-up route from here.
 
-If the `compareSync()` method returns false, we want to send a 401 status, specifying in the error message that the supplied username or password were incorrect.
+We'll create a new `payload` variable and assign it to the data we want to send as the token's payload. Then, we'll make the token and send it `token` to the client.
 
-```js
-// controllers/users.js
-// At the top of the file
-const jwt = require('jsonwebtoken');
+```javascript
+// controllers/auth.js
 
-// other routes here
-
-router.post('/signin', async (req, res) => {
+router.post('/sign-in', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    if (user && bcrypt.compareSync(req.body.password, user.hashedPassword)) {
-      const token = jwt.sign(
-        { username: user.username, _id: user._id },
-        process.env.JWT_SECRET
-      );
-      res.status(200).json({ token });
-    } else {
-      res.status(401).json({ error: 'Invalid username or password.' });
+    if (!user) {
+      return res.status(401).json({ err: 'Invalid credentials.' });
     }
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
-```
 
-Fantastic! We now have a working Sign In route that will check the user's credentials, and then create and supply a JWT back to the user if their password matches the hashed password on the server.
-
-## Refactoring the sign up process
-
-In most applications, signing up for a new account will automatically authenticate the new user. Let's implement that by adding our fancy new `jwt` code to the response from our `/users/signup` route, and including the token in our response as well:
-
-```js
-router.post('/signup', async (req, res) => {
-  try {
-    // Check if the username is already taken
-    const userInDatabase = await User.findOne({ username: req.body.username });
-    if (userInDatabase) {
-      return res.json({ error: 'Username already taken.' });
-    }
-    // Create a new user with hashed password
-    const user = await User.create({
-      username: req.body.username,
-      hashedPassword: bcrypt.hashSync(req.body.password, SALT_LENGTH),
-    });
-    const token = jwt.sign(
-      { username: user.username, _id: user._id },
-      process.env.JWT_SECRET
+    const isPasswordCorrect = bcrypt.compareSync(
+      req.body.password, user.hashedPassword
     );
-    res.status(201).json({ user, token });
-  } catch (error) {
-    res.status(400).json({ error: error.message });
+    if (!isPasswordCorrect) {
+      return res.status(401).json({ err: 'Invalid credentials.' });
+    }
+
+    // Construct the payload
+    const payload = { username: user.username, _id: user._id };
+
+    // Create the token, attaching the payload
+    const token = jwt.sign({ payload }, process.env.JWT_SECRET);
+
+    // Send the token instead of the message
+    res.status(200).json({ token });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
   }
 });
 ```
 
-Using Postman, make a POST request to `http://localhost:3000/users/signup` and check if you get a token with your new user.
+> ⚠️ Note that the payload is identical to the one we used in the sign-up route. We typically want to keep the payload consistent across our routes to ensure that the data the client receives is identical whether the user just signed up or is signing in for the hundredth time.
+
+Fantastic! We now have a working sign-in route that will check the user's credentials and then create and supply a JWT back to the user if their password matches the hashed password on the server.
 
 Next, we'll work on using the token to protect routes in our app!
