@@ -30,8 +30,8 @@ In the terminal, create a `package.json` with all of the default settings and in
 
 ```bash
 npm init -y
-npm i express mongoose dotenv
-npm i -D nodemon morgan
+npm i express mongoose dotenv morgan
+npm i -D nodemon
 ```
 
 Open the contents of the directory in VS Code:
