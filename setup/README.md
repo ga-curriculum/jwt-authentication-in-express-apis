@@ -30,7 +30,7 @@ In the terminal, create a `package.json` with all of the default settings and in
 
 ```bash
 npm init -y
-npm i express mongoose dotenv morgan
+npm i express mongoose dotenv morgan cors
 npm i -D nodemon
 ```
 
