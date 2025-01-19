@@ -50,28 +50,28 @@ node_modules
 Add the following boilerplate code to the `server.js` file:
 
 ```javascript
-const dotenv = require("dotenv");
+const dotenv = require('dotenv');
 dotenv.config();
-const express = require("express");
+const express = require('express');
 const app = express();
-const mongoose = require("mongoose");
-const cors = require("cors");
-const logger = require("morgan");
+const mongoose = require('mongoose');
+const cors = require('cors');
+const logger = require('morgan');
 
 mongoose.connect(process.env.MONGODB_URI);
 
-mongoose.connection.on("connected", () => {
+mongoose.connection.on('connected', () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
 app.use(cors());
 app.use(express.json());
-app.use(logger("dev"));
+app.use(logger('dev'));
 
 // Routes go here
 
 app.listen(3000, () => {
-  console.log("The express app is ready!");
+  console.log('The express app is ready!');
 });
 ```
 
@@ -100,11 +100,11 @@ Now we will add a quick script to our `package.json`.
 Open your `package.json` file and locate the `"scripts"` section. Add a new script called `"dev"` to run your server with nodemon. It should look like this:
 
 ```json
-"scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "start": "node server.js",
-  "dev": "nodemon server.js"
-}
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
 ```
 
 > `start` is for running the server in `production` mode.
