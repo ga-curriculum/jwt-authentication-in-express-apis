@@ -89,7 +89,7 @@ Finally, we are going to add a script to start our server in development mode us
 
 You should have already installed `nodemon` earlier using the following command:
 
-```sh
+```bash
 npm i -D nodemon
 ```
 
