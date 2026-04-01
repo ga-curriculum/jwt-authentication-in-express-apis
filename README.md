@@ -40,8 +40,8 @@ In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) 
 
 ### Course landing pages
 
-- [SEB - Software Engineering Bootcamp](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/jwt-authentication-in-express-apis/canvas-landing-pages/seb.html)
-- [Fallback](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/jwt-authentication-in-express-apis/canvas-landing-pages/fallback.html)
+- [SEB - Software Engineering Bootcamp](https://ga-curriculum.github.io/jwt-authentication-in-express-apis/canvas-landing-pages/seb.html)
+- [Fallback](https://ga-curriculum.github.io/jwt-authentication-in-express-apis/canvas-landing-pages/fallback.html)
 
 ### Resources
 
@@ -53,4 +53,4 @@ In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) 
 
 ---
 
-**Find a 👾 bug 👾 or have suggestions? [Let us know](https://pages.git.generalassemb.ly/modular-curriculum-all-courses/universal-resources-internal/module-feedback.html)!**
+**Find a 👾 bug 👾 or have suggestions? [Let us know](https://ga-curriculum.github.io/universal-resources-internal/module-feedback.html)!**
