@@ -36,7 +36,7 @@ In this module, you'll learn to build an Express API with JWT (JSON Web Tokens) 
 
 ### Solution code
 
-🏁 [Solution code](https://git.generalassemb.ly/modular-curriculum-all-courses/express-api-jwt-auth-template)
+🏁 [Solution code](https://github.com/ga-curriculum/express-api-jwt-auth-template)
 
 ### Course landing pages
 
